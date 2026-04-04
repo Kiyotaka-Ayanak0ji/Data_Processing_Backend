@@ -1,26 +1,25 @@
-const mysql = require("mysql");
+const sequelize = require('sequelize');
 
-const connection = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    port: process.env.DB_PORT,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE_NAME
+//Username, password and database name.
+const database = process.env.database;
+const username = process.env.username;
+const password = process.env.password;
+
+//Set up a sequelize client.
+const sequelize = new sequelize.Sequelize(database,username,password, {
+    host: 'postgres',
+    dialect: 'postgres'
 });
 
-const connect = () => {
-    connection.connect((error) => {
-        if (error) {
-            console.log(error);
-            return;
-        }
-        console.log({
-            host: process.env.DB_HOST,
-            user: process.env.DB_USER,
-            port: process.env.DB_PORT
-        });
-        console.log("Database Connected");
-    })
+//Connect and display errors(if any)..
+const connect = async() => {
+    try {
+        sequelize.authenticate();
+        console.log("Connection has been established successfully.")
+    } catch (error) {
+        console.error("Unable to connect to the database.", error);
+        process.exit(1);
+    }
 }
 
-module.exports = {connection,connect};
+module.exports = {connect,sequelize};
