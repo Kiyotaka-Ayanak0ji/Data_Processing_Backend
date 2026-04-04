@@ -1,7 +1,9 @@
 const express = require('express');
+const { connect } = require('./connectDB');
+
 require('dotenv').config();
-const { connect } = require('./connectDB.js');
-const router = require('./src/routes/userRoutes.js')
+//Connect to a database
+connect();
 
 //App
 const app = express();
@@ -9,11 +11,11 @@ const app = express();
 //Port
 const PORT = process.env.PORT || 5000;
 
-//API Routes..
-app.use("/user",router);
-
-//DB Connection
-connect();
+app.get("/test",(req,res) => {
+    return res.json({
+        message: "Test Success"
+    })
+});
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
