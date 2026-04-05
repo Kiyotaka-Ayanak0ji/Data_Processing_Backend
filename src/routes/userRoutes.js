@@ -1,10 +1,13 @@
 const express = require("express");
-
+const { login } = require("../controllers/userController");
 const router = express.Router();
 
-router.get("/signin",(req,res) => {
-    const username = req.body.username;
-    const password = req.body.password;
-});
+//Routes:
+// login
+// listusers
+// updateStatus ( admin only )
+// updateRole ( admin only )
+
+router.post('/user',login);
 
 module.exports = router; 

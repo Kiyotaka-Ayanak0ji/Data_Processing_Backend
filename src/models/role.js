@@ -14,7 +14,6 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Role.hasMany(models.User,{
         foreignKey: 'roleId',
-        as: 'user'
       })
     }
   }
@@ -24,7 +23,8 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate:{
         [Op.in]: ["viewer","analyst","admin"]
-      }
+      },
+      defaultValue: "viewer"
     }
   }, {
     sequelize,

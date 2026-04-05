@@ -14,7 +14,6 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       FinancialRecord.belongsTo(models.User,{
         foreignKey: 'userId',
-        as: 'user'
       })
     }
   }
@@ -44,7 +43,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true
     }
   }, {
-    timestamps,
+    timestamps: true,
     sequelize,
     modelName: 'FinancialRecord',
   });
