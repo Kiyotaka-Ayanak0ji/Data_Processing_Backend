@@ -3,7 +3,8 @@ const bcrypt = require('bcrypt');
 const { User,Role } = require('../models');
 
 //JWT-token based auth.
-const JWT_SECRET = process.env.JWT_SECRET || require('crypto').randomBytes(32).toString('hex');
+//require('crypto').randomBytes(32).toString('hex');
+const JWT_SECRET = process.env.JWT_SECRET 
 
 const login = async(req,res,next) => {
     try {
@@ -17,7 +18,7 @@ const login = async(req,res,next) => {
 
         const user = await User.findOne({
             where: {
-                email
+                email: email
             },
             include: {
                 model: Role,
@@ -46,6 +47,7 @@ const login = async(req,res,next) => {
         }
 
         const payload = {userId: user.id, role: user.role.name};
+        console.log(payload);
         //Generate a JWT-session token.
         const token = jwt.sign(payload,JWT_SECRET,{expiresIn: '2h'});
         

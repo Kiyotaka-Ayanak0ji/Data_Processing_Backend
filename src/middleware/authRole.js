@@ -6,10 +6,14 @@ const authorizeRoles = (...allowedRoles) => (req,res,next) => {
         })
     }
 
-    if(!allowedRoles.includes(req.user.role.name)){
+    if(allowedRoles.includes(req.user.role.name)){
         //Access denied 403.
         return res.status(403).json({
             message: "Forbidden: Insufficient privileges!"
         });
     }
+
+    return next();
 }
+
+module.exports = authorizeRoles; 
