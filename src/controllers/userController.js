@@ -154,9 +154,28 @@ const updateRole = async (req, res, next) => {
   }
 };
 
+const deleteUser = async (req,res,next) => {
+  try{
+    const user = await User.findbyPk(req.params.id);
+    if(!user){
+      return res.status(404).json({
+        message: "User not found."
+      });
+    }
+    //Destroy the instance.
+    await user.destroy();
+    return res.status(204).json({
+      message: "User successfully deleted."
+    });
+  }catch(err){
+    next(err);
+  }
+}
+
 module.exports = {
   createUser,
   listUsers,
   updateStatus,
-  updateRole
+  updateRole,
+  deleteUser
 };

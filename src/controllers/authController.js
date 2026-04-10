@@ -47,7 +47,7 @@ const login = async(req,res,next) => {
         }
 
         const payload = {userId: user.id, role: user.role.name};
-        console.log(payload);
+        
         //Generate a JWT-session token.
         const token = jwt.sign(payload,JWT_SECRET,{expiresIn: '2h'});
         

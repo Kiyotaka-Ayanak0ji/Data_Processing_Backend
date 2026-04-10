@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       FinancialRecord.belongsTo(models.User,{
         foreignKey: 'userId',
+        as: 'user'
       })
     }
   }
