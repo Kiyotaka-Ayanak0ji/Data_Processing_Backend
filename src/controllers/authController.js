@@ -27,6 +27,7 @@ const login = async(req,res,next) => {
         });
 
         if(!user){
+            console.log(`Email: ${email}` + `\nPassword ${password}`);
             //Unauthorized access 401
             return res.status(401).json({
                 message: "Invalid credentials."

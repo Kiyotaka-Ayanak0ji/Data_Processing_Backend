@@ -1,7 +1,6 @@
 'use strict';
 const {
-  Model,
-  Op
+  Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class FinancialRecord extends Model {
@@ -13,38 +12,26 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       FinancialRecord.belongsTo(models.User,{
-        foreignKey: 'userId',
-        as: 'user'
+        foreignKey: "userId",
+        as: "user"
       })
     }
   }
   FinancialRecord.init({
-    amount: {
-      type: DataTypes.DECIMAL(6,2),
+    userId: {
+      type: DataTypes.INTEGER,
       allowNull: false,
-      validate: {min: 0}
-    },
-    type: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        [Op.in]: ["income","expense"] 
+      references: {
+        model: "Users",
+        key: "id"
       }
     },
-    category:{
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    date: {
-      type: DataTypes.DATEONLY,
-      allowNull: false
-    },
-    notes: {
-      type: DataTypes.STRING,
-      allowNull: true
-    }
+    amount: DataTypes.DECIMAL,
+    type: DataTypes.STRING,
+    category: DataTypes.STRING,
+    date: DataTypes.DATEONLY,
+    notes: DataTypes.STRING
   }, {
-    timestamps: true,
     sequelize,
     modelName: 'FinancialRecord',
   });

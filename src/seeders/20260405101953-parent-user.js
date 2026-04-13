@@ -34,9 +34,9 @@ module.exports = {
         'Users',
         [
           {
-            name: 'System Admin',
-            email: 'admin@finance.local',
-            passwordHash: await bcrypt.hash('Admin123!', 10),
+            name: 'Admin',
+            email: 'admin@test.com',
+            passwordHash: await bcrypt.hash('Admin123', 10),
             status: 'active',
             roleId: adminRole.id,
             createdAt: new Date(),

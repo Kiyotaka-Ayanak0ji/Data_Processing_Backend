@@ -1,7 +1,6 @@
 'use strict';
 const {
-  Model,
-  Op
+  Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Role extends Model {
@@ -12,21 +11,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      // Role.hasMany(models.User,{
-      //   foreignKey: 'roleId',
-      //   as: 'user'
-      // })
+      Role.hasMany(models.User,{
+        foreignKey: "roleId",
+        as: "users"
+      });
     }
   }
   Role.init({
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate:{
-        [Op.in]: ["viewer","analyst","admin"]
-      },
-      defaultValue: "viewer"
-    }
+    name: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Role',

@@ -9,7 +9,8 @@ const password = process.env.PASSWORD;
 //Set up a sequelize client.
 const sequelize = new Sequelize(database,username,password, {
     host: 'localhost',
-    dialect: 'postgres'
+    dialect: 'postgres',
+    logging: console.log
 });
 
 //Connect and display errors(if any)..

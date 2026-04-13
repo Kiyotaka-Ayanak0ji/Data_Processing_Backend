@@ -1,6 +1,7 @@
-const { FinancialRecord,User } = require('../models');
+const { FinancialRecord,User,Role } = require('../models');
 
 const createRecord = async (req,res,next) => {
+    console.log("INSIDE CREATE RECORD:", req.user);
     try{
         const {amount,type,category,date,notes} = req.body;
 
@@ -10,16 +11,24 @@ const createRecord = async (req,res,next) => {
             });
         }
 
+        const parsedDate = new Date(date);
+
+        if (isNaN(parsedDate)) {
+            return res.status(400).json({
+                message: "Invalid date format. Use YYYY-MM-DD"
+            });
+        }
+
         //Record object
         const record = await FinancialRecord.create({
-            amount,
-            type,
-            category,
-            date,
-            notes,
+            amount: amount,
+            type: type,
+            category: category,
+            date: new Date(date),
+            notes: notes,
             userId: req.user.userId
         });
-
+        console.log(record);
         //Resource created
         return res.status(201).json(record);
     }catch(err){
@@ -63,11 +72,16 @@ const updateRecord = async(req,res,next) => {
 const listRecords = async(req,res,next) => {
     try{
         const records = await FinancialRecord.findAll({
-            attributes: ["amount","type","category","date","notes"],
+            attributes: ["id","amount","type","category","date","notes"],
             include: {
                 model: User,
                 as: 'user',
-                attributes: ["name","roleName"] 
+                attributes: ["id","name"],
+                include: {
+                    model: Role,
+                    as: "role",
+                    attributes: ["name"]
+                } 
             }
         });
 
@@ -78,7 +92,9 @@ const listRecords = async(req,res,next) => {
             })
         }
 
+        //Successful Record fetch..
         return res.json(records);
+
     }catch(err){
         next(err)
     }

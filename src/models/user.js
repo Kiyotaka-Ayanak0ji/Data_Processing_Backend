@@ -1,7 +1,6 @@
 'use strict';
 const {
-  Model,
-  Op
+  Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
@@ -14,39 +13,28 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       User.belongsTo(models.Role,{
         foreignKey: 'roleId',
-        as: 'role'
+        as: "role"
       });
       User.hasMany(models.FinancialRecord,{
-        foreignKey: 'userId',
-        as: 'record'
-      })
-
+        foreignKey: "userId",
+        as: "records"
+      });
     }
   }
   User.init({
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    email:{
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true,
-      validate: {isEmail: true}
-    },
-    passwordHash: {
+    name: DataTypes.STRING,
+    email: DataTypes.STRING,
+    passwordHash: DataTypes.STRING,
+    status: DataTypes.STRING,
+    roleId: {
       type: DataTypes.STRING,
       allowNull: false,
-    },
-    status:{
-      type: DataTypes.STRING,
-      validate: {
-        isIn: ["active","inactive"]
-      },
-      defaultValue: "active"
+      references: {
+        model: "Roles",
+        key: "id"
+      }
     }
   }, {
-    timestamps: true,
     sequelize,
     modelName: 'User',
   });
