@@ -21,7 +21,7 @@ module.exports = {
         onDelete: "CASCADE"
       },
       amount: {
-        type: Sequelize.DECIMAL(6,2),
+        type: Sequelize.DECIMAL(10,2),
         allowNull: false,
         validate: {
           min: 0
