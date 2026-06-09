@@ -12,7 +12,6 @@ An API for data processing and RBAC for financial data, including complete authe
 ### Additional Features:
 - Pagination ( Work In progress )
 - Rate Limiting (Work In Progress)
-- User session management and limited session window using refresh tokens ( Work In progress )
 
 ### Tools Used:
 - Express.JS
