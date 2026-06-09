@@ -6,12 +6,17 @@ const database = process.env.DATABASE;
 const username = process.env.USERNAME;
 const password = process.env.PASSWORD;
 
-//Set up a sequelize client.
-const sequelize = new Sequelize(database,username,password, {
-    host: 'localhost',
-    dialect: 'postgres',
+// //Set up a sequelize client.
+// const sequelize = new Sequelize(database,username,password, {
+//     host: 'localhost',
+//     dialect: 'postgres',
+//     logging: console.log
+// });
+
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
+    dialect: "postgres",
     logging: console.log
-});
+})
 
 //Connect and display errors(if any)..
 const connect = async() => {
